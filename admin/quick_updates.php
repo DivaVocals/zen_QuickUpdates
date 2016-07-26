@@ -445,7 +445,7 @@ switch ($_GET['action']) {
 
 // bof get products data from db
 //// control string sort page
-  if ($sort_by && !ereg('order by', $sort_by)){
+  if ($sort_by && !preg_match('/order by/', $sort_by)){
      $sort_by = 'order by ' . $sort_by ;
    }else{
      // added default sort order
@@ -785,7 +785,7 @@ while (!$products->EOF) {
           $value = trim($value, '+');
           // add percentage
           //(add is the same as substract of course, but I retain this if/else structure because different treatment might be desired)
-          $valeur = (1 - (ereg_replace("%", '', $_POST['price_markup']) / 100));
+          $valeur = (1 - (str_replace("%", '', $_POST['price_markup']) / 100));
           $price = sprintf("%01.4f", round($products->fields['products_price'] + (($value/ 100) * $products->fields['products_price']),4));     
         }
       } else {
